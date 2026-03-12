@@ -11,7 +11,7 @@ pub fn check_update() -> anyhow::Result<()> {
     // Check GitHub for latest release
     let releases = self_update::backends::github::ReleaseList::configure()
         .repo_owner("sessioncast")
-        .repo_name("sessioncast-cli")
+        .repo_name("sessioncast-cli-rs")
         .build()?;
 
     let releases = releases.fetch()?;
@@ -50,7 +50,7 @@ pub fn update() -> anyhow::Result<()> {
 
     let status = self_update::backends::github::Update::configure()
         .repo_owner("sessioncast")
-        .repo_name("sessioncast-cli")
+        .repo_name("sessioncast-cli-rs")
         .bin_name("sessioncast")
         .show_download_progress(true)
         .current_version(cargo_crate_version!())
