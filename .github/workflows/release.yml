@@ -13,6 +13,7 @@ jobs:
     name: Build ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           # macOS
@@ -20,13 +21,10 @@ jobs:
             os: macos-latest
             archive: tar.gz
           - target: x86_64-apple-darwin
-            os: macos-latest
+            os: macos-13  # Intel runner
             archive: tar.gz
-          # Linux
+          # Linux (native builds)
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-            archive: tar.gz
-          - target: aarch64-unknown-linux-gnu
             os: ubuntu-latest
             archive: tar.gz
           # Windows
@@ -42,12 +40,6 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
-
-      - name: Install cross-compilation tools (Linux aarch64)
-        if: matrix.target == 'aarch64-unknown-linux-gnu'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu
 
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
