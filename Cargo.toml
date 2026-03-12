@@ -1,0 +1,91 @@
+[package]
+name = "sessioncast"
+version = "0.1.0"
+edition = "2021"
+authors = ["SessionCast"]
+description = "SessionCast CLI - Control your agents from anywhere"
+license = "MIT"
+repository = "https://github.com/sessioncast/sessioncast-cli"
+readme = "README.md"
+keywords = ["tmux", "terminal", "remote", "websocket", "cli"]
+categories = ["command-line-utilities", "development-tools"]
+
+[[bin]]
+name = "sessioncast"
+path = "src/main.rs"
+
+[dependencies]
+# CLI
+clap = { version = "4", features = ["derive", "env"] }
+colored = "2"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# WebSocket
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }
+futures-util = "0.3"
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "native-tls"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+# Configuration
+confy = "0.6"
+directories = "5"
+
+# Crypto
+aes-gcm = "0.10"
+base64 = "0.22"
+sha2 = "0.10"
+rand = "0.8"
+
+# Compression
+zstd = "0.13"
+flate2 = "1"
+
+# Process management
+which = "6"
+
+# Self-update
+self_update = { version = "0.40", features = ["archive-tar", "archive-zip", "compression-flate2"] }
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Progress indicators
+indicatif = "0.17"
+
+# OAuth/PKCE
+url = "2"
+open = "5"
+hex = "0.4"
+whoami = "1"
+
+# Sentry (optional)
+sentry = { version = "0.34", optional = true }
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["processthreadsapi", "handleapi"] }
+ureq = "2"
+zip = { version = "0.6", default-features = false, features = ["deflate"] }
+
+[features]
+default = []
+sentry = ["dep:sentry"]
+
+[profile.release]
+opt-level = "z"      # Optimize for size
+lto = true           # Link-time optimization
+codegen-units = 1    # Better optimization
+panic = "abort"      # Smaller binary
+strip = true         # Strip symbols
