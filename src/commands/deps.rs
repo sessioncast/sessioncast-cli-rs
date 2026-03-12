@@ -184,7 +184,7 @@ fn install_tmux_linux() -> anyhow::Result<()> {
 #[cfg(windows)]
 fn install_itmux_windows() -> anyhow::Result<()> {
     use std::fs;
-    use std::io::Read;
+    use std::io::{Read, Write};
 
     println!("\n  {}", "itmux Installation Guide".bold());
     println!(
