@@ -302,7 +302,7 @@ async fn exchange_code_for_token(
     ];
 
     let response = client
-        .post(&format!("{}/oauth/token", auth_url))
+        .post(format!("{}/oauth/token", auth_url))
         .form(&params)
         .send()
         .await?;
@@ -323,7 +323,7 @@ async fn generate_agent_token(api_url: &str, access_token: &str) -> Result<Agent
         .unwrap_or_else(|_| "unknown".to_string());
 
     let response = client
-        .post(&format!("{}/api/tokens/generate", api_url))
+        .post(format!("{}/api/tokens/generate", api_url))
         .bearer_auth(access_token)
         .json(&serde_json::json!({ "machineId": hostname }))
         .send()

@@ -21,7 +21,7 @@ pub fn check_deps() -> anyhow::Result<()> {
 
     let mut all_ok = true;
     for dep in &deps {
-        let installed = command_exists(&dep.binary);
+        let installed = command_exists(dep.binary);
         let status = if installed {
             "✓ installed".green()
         } else {
@@ -53,7 +53,7 @@ pub fn install() -> anyhow::Result<()> {
     let platform = Platform::detect();
     let deps = get_required_deps();
 
-    let missing: Vec<_> = deps.iter().filter(|d| !command_exists(&d.binary)).collect();
+    let missing: Vec<_> = deps.iter().filter(|d| !command_exists(d.binary)).collect();
 
     if missing.is_empty() {
         println!("{}", "All dependencies are already installed!".green());
@@ -165,7 +165,7 @@ fn install_tmux_linux() -> anyhow::Result<()> {
         Err(_) => {
             // Try without sudo (might work in some containers)
             println!("  {} trying without sudo...", "sudo failed,".yellow());
-            let status = std::process::Command::new(&install_cmd[0])
+            let status = std::process::Command::new(install_cmd[0])
                 .args(&install_cmd[1..])
                 .status()?;
             if status.success() {

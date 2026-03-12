@@ -45,6 +45,12 @@ pub fn is_available() -> bool {
 pub struct UnixTmuxExecutor;
 
 #[cfg(not(windows))]
+impl Default for UnixTmuxExecutor {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl UnixTmuxExecutor {
     pub fn new() -> Self {
         Self
@@ -589,8 +595,7 @@ pub fn send_keys(target: &str, keys: &str, enter: bool) -> bool {
     }
 
     // Handle text with newline at end
-    if keys.ends_with('\n') {
-        let cmd = &keys[..keys.len() - 1];
+    if let Some(cmd) = keys.strip_suffix('\n') {
         if !cmd.is_empty() {
             executor.send_keys(target, cmd);
         }

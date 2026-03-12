@@ -167,7 +167,7 @@ async fn main() -> anyhow::Result<()> {
 
         println!("{}", "\n  SessionCast CLI\n".bold());
         println!("  Control your agents from anywhere.\n");
-        println!("{}", "  Run `sessioncast --help` for usage.\n");
+        println!("  Run `sessioncast --help` for usage.\n");
         return Ok(());
     };
 

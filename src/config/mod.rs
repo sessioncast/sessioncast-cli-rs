@@ -97,7 +97,7 @@ impl AgentConfig {
             let machine_id = get_hostname();
 
             // Try to fetch relay URL from Platform API
-            let relay_url = Self::fetch_relay_url(&token)
+            let relay_url = Self::fetch_relay_url(token)
                 .await
                 .unwrap_or_else(|| app_config.relay_url().to_string());
 
