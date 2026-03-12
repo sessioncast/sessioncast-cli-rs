@@ -51,9 +51,10 @@ impl Default for UnixTmuxExecutor {
     }
 }
 
+#[cfg(not(windows))]
 impl UnixTmuxExecutor {
     pub fn new() -> Self {
-        Self
+        UnixTmuxExecutor
     }
 
     fn execute(&self, args: &[&str]) -> Option<String> {

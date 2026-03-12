@@ -184,7 +184,7 @@ fn install_tmux_linux() -> anyhow::Result<()> {
 #[cfg(windows)]
 fn install_itmux_windows() -> anyhow::Result<()> {
     use std::fs;
-    use std::io::{self, Read, Write};
+    use std::io::Read;
 
     println!("\n  {}", "itmux Installation Guide".bold());
     println!(
@@ -252,7 +252,7 @@ fn install_itmux_windows() -> anyhow::Result<()> {
 
     println!("  {}", "Downloading...".cyan());
 
-    let mut response = ureq::get(&zip_url)
+    let response = ureq::get(&zip_url)
         .call()
         .map_err(|e| anyhow::anyhow!("Failed to download: {}", e))?;
 
